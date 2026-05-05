@@ -29,6 +29,10 @@ public abstract class page {
 
         JLabelSystem label = new JLabelSystem(label);
 
+
+
+
+
     }
 
 
