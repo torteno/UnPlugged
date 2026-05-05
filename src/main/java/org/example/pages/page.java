@@ -1,7 +1,9 @@
 package org.example.pages;
 
-import javax.swing.*;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public abstract class page {
 
@@ -14,6 +16,10 @@ public abstract class page {
 
 
 
+    }
+
+    public void addJButton(JButton button) {
+        
     }
 
 
