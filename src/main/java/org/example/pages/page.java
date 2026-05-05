@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 public abstract class page {
 
     private String pageName;
@@ -28,6 +31,10 @@ public abstract class page {
 
     }
 
+
+    public void addJButton(JButton button) {
+
+    }
 
 
 }
