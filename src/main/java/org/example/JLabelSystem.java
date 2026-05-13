@@ -1,11 +1,14 @@
 package org.example;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class JLabelSystem {
 
@@ -13,15 +16,12 @@ public class JLabelSystem {
 
     public Map<String, JLabel> assets = new HashMap<>();
 
-    private frame myFrame;
+    private final Frame myFrame;
 
 
-    public JLabelSystem(frame myFrame) {
-
+    public JLabelSystem(Frame myFrame) {
         this.myFrame = myFrame;
     }
-
-
 
     private ImageIcon getSprite(String filePath, int width, int height) {
         String key = filePath + "|" + width + "x" + height;
@@ -49,9 +49,6 @@ public class JLabelSystem {
         return icon;
     }
 
-
-
-
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
@@ -61,7 +58,6 @@ public class JLabelSystem {
 
         JLabel label = new JLabel(Icon);
         label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
-
 
         if (opaque) {
             label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
@@ -81,24 +77,11 @@ public class JLabelSystem {
         zOrder = Math.max(0, Math.min(zOrder, maxZOrder)); // fixed with gpt // Ensure the z-order is within valid bounds (0 to maxZOrder)
         myFrame.backgroundPanel.setComponentZOrder(label, zOrder); // Set the z-order of the JLabel in the background panel to the specified zOrder
 
-
         return label; // Return the JLabel representing the asset
     }
 
-
     public ImageIcon gifs(String filePath) {
-
         ImageIcon icon = new ImageIcon(getClass().getResource("/" + filePath));
         return icon;
-
-
-
     }
-
-
-
-
-
-
-
 }

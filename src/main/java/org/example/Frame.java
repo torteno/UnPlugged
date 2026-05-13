@@ -1,15 +1,15 @@
 package org.example;
+import java.io.IOException; 
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-
-import java.awt.*;
-import java.io.IOException;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
-public class frame {
+public class Frame extends JFrame {
 
     JFrame frame;
     public JPanel backgroundPanel;
@@ -20,7 +20,7 @@ public class frame {
     JLabel background;
 
 
-    frame() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    Frame() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         frame = new JFrame("UnPlug");
         frame.setVisible(true);
         frame.setResizable(true);
