@@ -27,7 +27,7 @@ public class Frame extends JFrame {
 
         musicSystem.sequencer("music/nature.wav", 10, 0, true);
         logo = label.assets(0, 0, getWidth(), getHeight(), "images/UI/UnPlug logo.png", true, 0, true, false);
-        background = label.assets(0, 0, getWidth(), getHeight(), "images/UI/background.png", false, 100, true, true);
+        background = label.assets(0, 0, getWidth(), getHeight(), "images/UI/background.gif", false, 100, true, true);
 
         backgroundPanel.add(background); 
         backgroundPanel.setComponentZOrder(background, backgroundPanel.getComponentCount() - 1);

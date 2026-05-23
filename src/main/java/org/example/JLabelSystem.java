@@ -81,7 +81,11 @@ public class JLabelSystem {
     }
 
     public ImageIcon gifs(String filePath) {
-        ImageIcon icon = new ImageIcon(getClass().getResource("/" + filePath));
-        return icon;
+        URL location = getClass().getResource("/" + filePath);
+        if (location == null) {
+            System.err.println("GIF not found: " + filePath);
+            return new ImageIcon();
+        }
+        return new ImageIcon(location);
     }
 }

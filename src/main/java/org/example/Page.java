@@ -23,9 +23,8 @@ public abstract class Page {
     }
 
     public void loadNavigation() {
-        coins = labelSystem.assets(20, 20, 50, 50, "assets/coins.png", false, 1, true, false); 
-        streak = labelSystem.assets(90, 20, 50, 50, "assets/streak.png", false, 1, true, false);
-        addJLabel(coins); 
+        coins = labelSystem.assets(20, 20, 50, 50, "images/UI/coins.png", false, 1, true, false);
+        streak = labelSystem.assets(90, 20, 50, 50, "images/UI/streak.png", false, 1, true, false);
         addJLabel(streak); 
     }
 
