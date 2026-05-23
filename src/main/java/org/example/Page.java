@@ -24,13 +24,13 @@ public abstract class Page {
 
     public void loadNavigation() {
         coins = labelSystem.assets(20, 20, 50, 50, "images/UI/coins.png", false, 1, true, false);
-        streak = labelSystem.assets(90, 20, 50, 50, "images/UI/streak.png", false, 1, true, false);
+        streak = labelSystem.assets(90, 20, 50, 50, "images/UI/streak.png", false, 0, true, false);
+        addJLabel(coins);
         addJLabel(streak); 
     }
 
     public void addJLabel(JLabel label) {
         pageLabels.add(label);
-        myFrame.backgroundPanel.add(label);
     }
 
     public void loadButtons() {

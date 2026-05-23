@@ -52,22 +52,17 @@ public class JLabelSystem {
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
-        if(gif) {
+        if (gif) {
             Icon = gifs(filePath);
         }
 
         JLabel label = new JLabel(Icon);
         label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
+        label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
 
-        if (opaque) {
-            label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
-        } else {
-            label.setOpaque(false); // If the asset should not be opaque, set the JLabel to be transparent
-        }
+        myFrame.backgroundPanel.add(label);
 
-        myFrame.backgroundPanel.add(label); // Add the JLabel to the background panel
-
-        if(visible) {
+        if (visible) {
             label.setVisible(true); // If the asset should be visible, set the JLabel to be visible
         } else {
             label.setVisible(false); // If the asset should not be visible, set the JLabel to be invisible
