@@ -58,7 +58,7 @@ public class JLabelSystem {
 
         JLabel label = new JLabel(Icon);
         label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
-        label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
+        label.setOpaque(opaque); // If the asset should be opaque, set the JLabel to be opaque
 
         myFrame.backgroundPanel.add(label);
 

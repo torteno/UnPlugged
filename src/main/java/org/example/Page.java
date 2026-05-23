@@ -11,9 +11,6 @@ public abstract class Page {
     private final JButtonSystem buttonSystem; 
     private final Frame myFrame; 
 
-    private JLabel coins;
-    private JLabel streak;
-
     public Page(Frame myFrame, String pageName, ArrayList<JLabel> pageLabels) {
         this.myFrame = myFrame;
         this.pageLabels = pageLabels;
@@ -23,10 +20,12 @@ public abstract class Page {
     }
 
     public void loadNavigation() {
-        coins = labelSystem.assets(20, 20, 50, 50, "images/UI/coins.png", false, 1, true, false);
-        streak = labelSystem.assets(90, 20, 50, 50, "images/UI/streak.png", false, 0, true, false);
-        addJLabel(coins);
-        addJLabel(streak); 
+        addJLabel(labelSystem.assets(0, 0, 279, 207, "images/UI/logo.png", false, 1, true, false));
+        addJLabel(labelSystem.assets(0, 0, 284, 113, "images/UI/focus.png", false, 1, true, false));
+        addJLabel(labelSystem.assets(0, 0, 220, 113, "images/UI/go.png", false, 1, true, false));
+        addJLabel(labelSystem.assets(0, 0, 284, 113, "images/UI/sleep.png", false, 1, true, false));
+        addJLabel(labelSystem.assets(0, 0, 284, 113, "images/UI/social.png", false, 1, true, false));
+        addJLabel(labelSystem.assets(0, 0, 294, 113, "images/UI/profile.png", false, 1, true, false));
     }
 
     public void addJLabel(JLabel label) {

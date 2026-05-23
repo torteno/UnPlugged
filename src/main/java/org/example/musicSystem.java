@@ -14,9 +14,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class musicSystem {
 
     static Clip clip;
-
     static HashMap<String, Clip> clips = new HashMap<>();
-
+    
     public static void sequencer(String input, float volume, int repeat, boolean loop) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioInputStream audio = null;
 
