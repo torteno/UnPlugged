@@ -1,11 +1,7 @@
-package org.example.pages;
+package org.example;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
-
-import org.example.Frame;
-import org.example.JButtonSystem;
-import org.example.JLabelSystem;
 
 public abstract class Page {
 

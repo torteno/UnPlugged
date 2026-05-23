@@ -17,7 +17,6 @@ public class Frame extends JFrame {
     Frame() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         label = new JLabelSystem(this); 
         setTitle("UnPlug");
-        setVisible(true);
         setResizable(true);
         setSize(1000,1000);
 
@@ -31,7 +30,9 @@ public class Frame extends JFrame {
         background = label.assets(0, 0, getWidth(), getHeight(), "images/UI/background.png", false, 100, true, true);
 
         backgroundPanel.add(background); 
+        backgroundPanel.setComponentZOrder(background, backgroundPanel.getComponentCount() - 1);
         backgroundPanel.add(logo); 
+        setVisible(true);
         revalidate(); 
         repaint(); 
     }

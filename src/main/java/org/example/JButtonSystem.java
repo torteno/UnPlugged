@@ -13,6 +13,7 @@ public class JButtonSystem {
         JButton button = new JButton(text); 
         button.setBounds(x, y, width, height); 
         frame.backgroundPanel.add(button); 
+        frame.backgroundPanel.setComponentZOrder(button, 0);
         frame.revalidate(); 
         frame.repaint(); 
         return button; 
