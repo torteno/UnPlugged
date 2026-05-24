@@ -1,12 +1,12 @@
 package org.example.pages;
 
-public class sleepPage extends page {
+public class sleepPage {
 
-    public sleepPage() {
-        super();
+  //  public sleepPage() {
+     //   super();
 
 
-    }
+   // }
 
 
 }

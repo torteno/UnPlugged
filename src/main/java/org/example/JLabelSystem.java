@@ -2,12 +2,15 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JLabelSystem {
+public class JLabelSystem extends JLabel {
 
     private static final Map<String, ImageIcon> SPRITE_CACHE = new HashMap<>();
 
@@ -55,8 +58,11 @@ public class JLabelSystem {
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
+
+
+
         if(gif) {
-            Icon = gifs(filePath);
+            Icon = gifs(filePath, width, height);
         }
 
         JLabel label = new JLabel(Icon);
@@ -82,14 +88,72 @@ public class JLabelSystem {
         myFrame.backgroundPanel.setComponentZOrder(label, zOrder); // Set the z-order of the JLabel in the background panel to the specified zOrder
 
 
+
+
+        return label; // Return the JLabel representing the asset
+    }
+
+    public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif, boolean button, MouseAdapter mouseListener) {
+        ImageIcon Icon = getSprite(filePath, width, height);
+
+
+
+
+        if(gif) {
+            Icon = gifs(filePath, width, height);
+        }
+
+        JLabel label = new JLabel(Icon);
+        label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
+
+
+        if (opaque) {
+            label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
+        } else {
+            label.setOpaque(false); // If the asset should not be opaque, set the JLabel to be transparent
+        }
+
+        myFrame.backgroundPanel.add(label); // Add the JLabel to the background panel
+
+        if(visible) {
+            label.setVisible(true); // If the asset should be visible, set the JLabel to be visible
+        } else {
+            label.setVisible(false); // If the asset should not be visible, set the JLabel to be invisible
+        }
+
+        if(button && mouseListener != null) {
+            label.addMouseListener(mouseListener);
+        }
+
+        int maxZOrder = myFrame.backgroundPanel.getComponentCount() - 1; // fixed with gpt // Get the maximum z-order based on the number of components in the background panel
+        zOrder = Math.max(0, Math.min(zOrder, maxZOrder)); // fixed with gpt // Ensure the z-order is within valid bounds (0 to maxZOrder)
+        myFrame.backgroundPanel.setComponentZOrder(label, zOrder); // Set the z-order of the JLabel in the background panel to the specified zOrder
+
+
+
+
         return label; // Return the JLabel representing the asset
     }
 
 
-    public ImageIcon gifs(String filePath) {
+    public ImageIcon gifs(String filePath, int width, int height) {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/" + filePath));
-        return icon;
+
+        URL url = getClass().getResource("/" + filePath);
+        ImageIcon icon = new ImageIcon(url);
+        Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(scaled);
+
+
+
+    }
+
+
+   // @Override
+    protected void paintComponent(Graphics g, ImageIcon gif, int x, int y, int width, int height) {
+        super.paintComponent(g);
+        g.drawImage(gif.getImage(), x, y, width, height, this);
 
 
 
