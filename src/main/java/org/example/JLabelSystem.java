@@ -1,30 +1,33 @@
 package org.example;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class JLabelSystem extends JLabel {
+
+
+
 
     private static final Map<String, ImageIcon> SPRITE_CACHE = new HashMap<>();
 
     public Map<String, JLabel> assets = new HashMap<>();
 
-    private frame myFrame;
+    private final Frame myFrame;
 
 
-    public JLabelSystem(frame myFrame) {
-
+    public JLabelSystem(Frame myFrame) {
         this.myFrame = myFrame;
     }
-
-
 
     private ImageIcon getSprite(String filePath, int width, int height) {
         String key = filePath + "|" + width + "x" + height;
@@ -52,9 +55,6 @@ public class JLabelSystem extends JLabel {
         return icon;
     }
 
-
-
-
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
@@ -63,21 +63,15 @@ public class JLabelSystem extends JLabel {
 
         if(gif) {
             Icon = gifs(filePath, width, height);
-        }
+       }
 
         JLabel label = new JLabel(Icon);
         label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
+        label.setOpaque(opaque); // If the asset should be opaque, set the JLabel to be opaque
 
+        myFrame.backgroundPanel.add(label);
 
-        if (opaque) {
-            label.setOpaque(true); // If the asset should be opaque, set the JLabel to be opaque
-        } else {
-            label.setOpaque(false); // If the asset should not be opaque, set the JLabel to be transparent
-        }
-
-        myFrame.backgroundPanel.add(label); // Add the JLabel to the background panel
-
-        if(visible) {
+        if (visible) {
             label.setVisible(true); // If the asset should be visible, set the JLabel to be visible
         } else {
             label.setVisible(false); // If the asset should not be visible, set the JLabel to be invisible
@@ -93,6 +87,13 @@ public class JLabelSystem extends JLabel {
         return label; // Return the JLabel representing the asset
     }
 
+    public ImageIcon gifs(String filePath) {
+        URL location = getClass().getResource("/" + filePath);
+        if (location == null) {
+            System.err.println("GIF not found: " + filePath);
+            return new ImageIcon();
+        }
+        return new ImageIcon(location);
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif, boolean button, MouseAdapter mouseListener) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
@@ -158,11 +159,4 @@ public class JLabelSystem extends JLabel {
 
 
     }
-
-
-
-
-
-
-
 }

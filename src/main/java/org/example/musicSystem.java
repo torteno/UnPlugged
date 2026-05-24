@@ -1,27 +1,35 @@
 package org.example;
 
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class musicSystem {
 
     static Clip clip;
-
     static HashMap<String, Clip> clips = new HashMap<>();
-
+    
     public static void sequencer(String input, float volume, int repeat, boolean loop) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-
-        File file = new File(input);
         AudioInputStream audio = null;
 
-        if(file.exists()) {
+        File file = new File(input);
+        if (file.exists()) {
             audio = AudioSystem.getAudioInputStream(file);
         } else {
-
-            //try grabbing it from the class path, neec to update  it because it needs to work with mac and windows because it was causing crashes in my last comp scoi project :sob:
+            var stream = musicSystem.class.getResourceAsStream("/" + input);
+            if (stream != null) {
+                audio = AudioSystem.getAudioInputStream(stream);
+            } else {
+                System.err.println("Audio file not found: " + input);
+                return;
+            }
         }
 
         if(clips.get(input) != null) {
@@ -30,7 +38,6 @@ public class musicSystem {
             }
             clips.remove(input).close();
         }
-
 
         clip = AudioSystem.getClip();
         clip.open(audio);
@@ -43,19 +50,9 @@ public class musicSystem {
         }
     }
 
-
     public static void volume(float volume) {
 
        // clip != null
 
-
     }
-
-
-
-
-
 }
-
-
-
