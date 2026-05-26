@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public abstract class overlay {
     
 
-        private String overlayName;
+        private String overlayName; // name of the overlay, used for identification and stuff, not really important but it can be useful for debugging and stuff
 
-        private ArrayList<Component> overlayComponents;
+        private ArrayList<Component> overlayComponents; //list of overlay components
 
         protected JLabelSystem labelSystem;
 
@@ -20,7 +20,7 @@ public abstract class overlay {
         private boolean visibility;
 
 
-        public overlay(frame myFrame, String overlay) {
+        public overlay(frame myFrame, String overlay) { // constructor for the overlay class, takes in the frame and the name of the overlay, then initializes the label system and the arraylist for the components
 
             this.myFrame = myFrame;
             overlayName = overlay;
@@ -28,7 +28,7 @@ public abstract class overlay {
             this.overlayComponents = new ArrayList<>();
         }
 
-        public void addComponent(Component comp) {
+        public void addComponent(Component comp) { // ads components to the overlay
             overlayComponents.add(comp);
             myFrame.backgroundPanel.add(comp);
 
@@ -37,7 +37,7 @@ public abstract class overlay {
 
         public abstract void initializeOverlay();
 
-        public void overlayState(boolean state) {
+        public void overlayState(boolean state) { // overlay state to basically say iif its visible or not
 
             if(state) {
                 for (Component comp : overlayComponents) {
@@ -53,7 +53,7 @@ public abstract class overlay {
 
         public ArrayList<Component> getoverlayComponents() {
             return overlayComponents;
-        }
+        } // gets the overlay components
 
 
 

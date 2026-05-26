@@ -9,17 +9,17 @@ import java.awt.event.MouseEvent;
 
 public class navigation extends overlay {
 
-    JLabel logo;
-    JLabel focus;
-    JLabel social;
-    JLabel sleep;
-    JLabel go;
+    JLabel logo; // logo of the app, also serves as a home button
+    JLabel focus; // focus page button
+    JLabel social; // social page button
+    JLabel sleep; // sleep page button
+    JLabel go; // go page button
 
     private frame myFrame;
 
 
 
-    public navigation(frame myFrame) {
+    public navigation(frame myFrame) { // constructor for the navigation overlay, takes in the main frame as a parameter
         super(myFrame, "navigation");
         this.myFrame = myFrame;
     }
@@ -28,6 +28,7 @@ public class navigation extends overlay {
     @Override
     public void initializeOverlay() {
 
+        // Initialize the navigation buttons and add them to the overlay
         logo = labelSystem.assets(25, 0, 200, 200, "images/UI/logo.png", false, 0, true, false);
         addComponent(logo);
 

@@ -21,46 +21,50 @@ public class frame {
     JFrame frame;
     public JPanel backgroundPanel;
     JLabelSystem label = new JLabelSystem(this);
-    private static page activePage;
-    public static final boolean builder = true;
+    private static page activePage; // current active page
+    public static final boolean builder = false; // wether certain components should be movable
     private final int EDGE = 8;  // pixels from edge that count as a resize handle
 
-    public focusPage focusPg = new focusPage(this);
+    public focusPage focusPg = new focusPage(this); // focus page
 
 
-    public goPage goPg = new goPage(this);
+    public goPage goPg = new goPage(this); // go page
 
 
-    public socialPage socialPg = new socialPage(this);
+    public socialPage socialPg = new socialPage(this); // social page
 
 
-    public sleepPage sleepPg = new sleepPage(this);
+    public sleepPage sleepPg = new sleepPage(this); // sleep page
 
-    public navigation nav = new navigation(this);
+    public navigation nav = new navigation(this); // navigation overlay
 
 
  //   MouseMotionListener mouseMotionListener = buildSystem();
 
+
+    // list of pages in the frame
     private ArrayList<page> pages = new ArrayList<>();
 
+
+    // sets the frame width and with and height of the frame
     private final int FRAME_WIDTH = 1000;
     private final int FRAME_HEIGHT = 1000;
 
 
         frame() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        frame = new JFrame("UnPlug");
+        frame = new JFrame("UnPlug"); // create a new JFrame with the name UnPlug
 
         //frame.setSize(1000,1000);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE); //add a close operation to ask why they wanted to leave
-        backgroundPanel = new GradientPanel();
-        backgroundPanel.setLayout(null);
+        backgroundPanel = new GradientPanel(); // create a new JPanel to add to the frame, this is where all the components will be added to
+        backgroundPanel.setLayout(null); // set the layout to null so we can set the location of the components manually
 
 
-            userData data = new userData();
-            data.saveData();
+            userData data = new userData(); // create a new userData object to load and save the user's data
+            data.saveData(); // save the user's data to a file
 
-            data.loadSkins();
+            data.loadSkins(); // load the user's accessible skins, this is just a placeholder for now, it will be replaced with a method that loads the skins from the user's data file
 
 
 
@@ -73,13 +77,13 @@ public class frame {
 
         //JLabel background = label.assets(0, 0, 1000, 1000, "images/UI/background.gif", false, 100, true, true);
         //backgroundPanel.setComponentZOrder(background, backgroundPanel.getComponentCount() - 1);
-        backgroundPanel.revalidate();
-        backgroundPanel.repaint();
+        backgroundPanel.revalidate(); // revalidate the background panel to update the layout of the components
+        backgroundPanel.repaint(); // repaint the background panel to update the display of the components
 
 
-        nav.initializeOverlay();
+        nav.initializeOverlay(); // initialize the navigation overlay, this will add the navigation buttons to the background panel
 
-
+//initializes the pages
 
         focusPg.initializePage();
 
@@ -95,17 +99,20 @@ public class frame {
         activePage = focusPg;
 
 
-        frame.pack();
+        frame.pack(); // pack the frame to fit the size of the background panel and its components
 
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        frame.setLocationRelativeTo(null); // set the location of the frame to the center of the screen
+        frame.setResizable(true); // allow the frame to be resizable, this is important for the builder mode to work properly
 
 
 
-        musicSystem.sequencer("music/nature.wav", 10, 0, true);
+        musicSystem.sequencer("music/nature.wav", 10, 0, true); // play the background music, this is just a placeholder for now, it will be replaced with a method that plays the music from the user's data file
         //logo = label.assets(0, 0, frame.getWidth(), frame.getHeight(), "images/UI/UnPlug logo.png", true, 0, true, false);
 
 
+
+
+            // BUILDER MODEMADE ENTIRLY BY AI, JUST TO MAKE OUR LIVES EASIER SO WE CAN DRAG THE COMPONENTS AROUND AND REZISE THEM, I WILL DELETE FOR THE FINAL SUBMISSION
 
             if (builder) {
                 java.awt.event.MouseAdapter m = new java.awt.event.MouseAdapter() {
@@ -172,6 +179,8 @@ public class frame {
 
         frame.setVisible(true);
 
+
+        // adds all the pages to the array
         pages.add(focusPg);
         pages.add(goPg);
         pages.add(socialPg);
@@ -180,6 +189,8 @@ public class frame {
     }
 
 
+
+    // sets the active page to the page that is passed in, this is used to switch between pages when the navigation buttons are clicked, it also sets the visibility of the components on the page to true and the components on the other pages to false
     public void setActivePage(page page) {
             if(page != activePage) {
                 activePage = page;
