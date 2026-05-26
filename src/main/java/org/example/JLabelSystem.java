@@ -30,19 +30,22 @@ public class JLabelSystem extends JLabel {
     }
 
     private ImageIcon getSprite(String filePath, int width, int height) {
-        String key = filePath + "|" + width + "x" + height;
-        ImageIcon cached = SPRITE_CACHE.get(key);
-        if (cached != null) return cached;
+        String key = filePath + "|" + width + "x" + height; // Create a unique key for the sprite based on its file path and dimensions
+        ImageIcon cached = SPRITE_CACHE.get(key); // Check if the sprite is already cached
+        if (cached != null) return cached; // If the sprite is already cached, return it
 
-        ImageIcon raw;
-        URL imageURL = getClass().getResource("/" + filePath);
+        ImageIcon raw; // Load the source image as an ImageIcon
+        URL imageURL = getClass().getResource("/" + filePath); // Try to load the image from the classpath
         if (imageURL != null) {
-            raw = new ImageIcon(imageURL);
+            raw = new ImageIcon(imageURL); // If the image is found in the classpath, create an ImageIcon from the URL
         } else {
             raw = new ImageIcon(filePath);
         }
 
         // Render the source image into a sized BufferedImage now, so the source can be GC'd.
+
+        // Taken from my old project, Pumpkin Quest: https://github.com/torteno/PumpkinQuest
+
         BufferedImage scaled = new BufferedImage(Math.max(1, width), Math.max(1, height), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = scaled.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
