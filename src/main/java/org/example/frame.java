@@ -25,7 +25,7 @@ public class frame {
     public JPanel backgroundPanel;
     JLabelSystem label = new JLabelSystem(this);
     private static page activePage; // current active page
-    public static final boolean builder = false; // wether certain components should be movable
+    public static final boolean builder = false; // wether certain components should be movable. Not being used any more, but since so many lines used this variable im just gonna keep it here for now. Just because the builder variable is false, doesnt mean we cant all be builders of a better future, so keep building for what you believe in! Had to end off probably the final commit of any crescent CS project even on a positive quote :D
     private final int EDGE = 8;  // pixels from edge that count as a resize handle
 
     public focusPage focusPg = new focusPage(this); // focus page
