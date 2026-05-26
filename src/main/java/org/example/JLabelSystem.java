@@ -91,6 +91,10 @@ public class JLabelSystem extends JLabel {
         return label; // Return the JLabel representing the asset
     }
 
+    public ImageIcon getIcon(String filePath, int width, int height) {  // A public method to get an ImageIcon with the specified file path and dimensions, this can be used to get the icon for buttons and stuff
+        return getSprite(filePath, width, height);
+    }
+
     public ImageIcon gifs(String filePath) {
         URL location = getClass().getResource("/" + filePath);
         if (location == null) {
@@ -158,7 +162,7 @@ public class JLabelSystem extends JLabel {
 
 
    // @Override
-    protected void paintComponent(Graphics g, ImageIcon gif, int x, int y, int width, int height) {
+    protected void paintComponent(Graphics g, ImageIcon gif, int x, int y, int width, int height) { // paints gifs
         super.paintComponent(g);
         g.drawImage(gif.getImage(), x, y, width, height, this);
 

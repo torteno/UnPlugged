@@ -14,6 +14,8 @@ public class navigation extends overlay {
     JLabel social; // social page button
     JLabel sleep; // sleep page button
     JLabel go; // go page button
+    JButton shopButton; // shop page button, plain JButton since we dont have shop icon art yet
+    JButton prefsButton; // preferences page button, plain JButton since we dont have a preferences icon yet
 
     private frame myFrame;
 
@@ -64,6 +66,16 @@ public class navigation extends overlay {
             }
         });
         addComponent(social);
+
+        shopButton = new JButton("Shop"); // plain JButton with text since we dont have shop icon art, sits under the social nav button
+        shopButton.setBounds(25, 860, 95, 40);
+        shopButton.addActionListener(e -> myFrame.setActivePage(myFrame.shopPg));
+        addComponent(shopButton);
+
+        prefsButton = new JButton("Prefs"); // plain JButton with text since we dont have a preferences icon, sits next to the shop button
+        prefsButton.setBounds(130, 860, 95, 40);
+        prefsButton.addActionListener(e -> myFrame.setActivePage(myFrame.preferencesPg));
+        addComponent(prefsButton);
 
     }
 }

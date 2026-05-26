@@ -15,12 +15,13 @@ public class focusPage extends page {
     private JLabel focusTimer; // creates the timer JLabel which will show the time in minutes and seconds, it will be updated every second by the timer object that we will create later on
     private JLabel startButton; // creates the start button JLabel which will start the timer and the growth of the plant when clicked
     private JLabel stopButton; // creates the stop button JLabel which will stop the timer and the growth of the plant when clicked, it will be invisible at first and only become visible when the start button is clicked
+    private JLabel statsLabel; // small readout in the corner showing total time focused and number of sessions completed, refreshed after every stop
 
     boolean isFocusActive = false; // creates a boolean variable to keep track of whether the focus mode is active or not, it will be used to prevent multiple timers from being started at the same time and to prevent the timer from being stopped when it is not active
 
-    double stageDifference = 60 * 0.1; // 8 minutes per stage, can be changed to whatever we want, just make sure to change the name of the variable to something more fitting if you do change it
+    double stageDifference = 60 * 0.1; // how many seconds each plant growth stage should last before advancing to the next icon
 
-    int activeStage = 0; // active stage of the plant growth
+    int activeStage = 0; // active stage of the plant growth, starts at 0 so the plant begins as a seedling and grows up over the session
 
     private static int seconds = 0; // creates a static integer variable to keep track of the number of seconds that have passed since the focus mode was started, it will be updated every second by the timer object that we will create later on and it will be used to update the timer JLabel and to determine when to change the plant growth stage
     private Timer timer; // creates a Timer object which will be used to update the seconds variable and the timer JLabel every second, it will be started when the start button is clicked and stopped when the stop button is clicked
@@ -41,7 +42,7 @@ public class focusPage extends page {
     @Override
     public void initializePage() { // initializes the focusPage by creating the plant JLabel, the timer JLabel, the start button JLabel and the stop button JLabel, it also sets the bounds and the icons for each of them and adds them to the page using the addComponent method from the superclass
 
-        plant = labelSystem.assets(300, 540,200, 200, userData.getActiveSkin()[activeStage], false, 0, true, false);
+        plant = labelSystem.assets(422, 281,200, 200, userData.getActiveSkin()[activeStage], false, 0, true, false);
         System.out.println(userData.getActiveSkin()[activeStage]);
 
         addComponent(plant); // adds the plant JLabel to the page using the addComponent method from the superclass
@@ -57,9 +58,7 @@ public class focusPage extends page {
                         }
                         startFocus(); // calls the startFocus method to start the timer and the growth of the plant
                         startButton.setVisible(false); // makes the start button invisible when clicked
-                        startButton.setComponentZOrder(startButton, 10); // moves the start button to the back of the component stack so it doesnt interfere with the stop button when it becomes visible
                         stopButton.setVisible(true); // makes the stop button visible when the start button is clicked
-                        stopButton.setComponentZOrder(stopButton, 0);   // moves the stop button to the front of the component stack so it can be clicked when it becomes visible
                     }
                 });
         } else {
@@ -77,9 +76,7 @@ public class focusPage extends page {
                 }
                 stopFocus(); // calls the stopFocus method to stop the timer and the growth of the plant when clicked
                 stopButton.setVisible(false); // makes the stop button invisible when clicked
-                stopButton.setComponentZOrder(stopButton, 10); // moves the stop button to the back of the component stack so it doesnt interfere with the start button when it becomes visible
                 startButton.setVisible(true); // makes the start button visible when the stop button is clicked
-                startButton.setComponentZOrder(startButton, 0); // moves the start button to the front of the component stack so it can be clicked when it becomes visible
             }
         });
     } else {
@@ -95,9 +92,13 @@ public class focusPage extends page {
             seconds++; // increments the seconds variable by 1 every time the timer updates
             focusTimer.setText(formatTime(seconds)); // updates the text of the timer JLabel to show the current time in minutes and seconds using the formatTime method to format the seconds variable into a string in the format of "mm:ss"
 
-            if(seconds / userData.getActiveSkin().length > stageDifference) { // checks if the number of seconds that have passed divided by the number of stages in the plant growth is greater than the stageDifference variable, if it is then it means that we need to update the plant growth stage
-                activeStage++; // increments the activeStage variable by 1 to move to the next stage of the plant growth
-                plant.setIcon(new ImageIcon(userData.getActiveSkin()[activeStage])); // updates the icon of the plant JLabel to show the new stage of the plant growth using the activeStage variable to get the correct image from the userData.getActiveSkin() array
+            int targetStage = (int)(seconds / stageDifference); // calculates which stage we should be on based on how many seconds have passed and how long each stage lasts
+            if(targetStage >= userData.getActiveSkin().length) { // clamps the target to the last available skin frame so we never index past the array and crash
+                targetStage = userData.getActiveSkin().length - 1;
+            }
+            if(targetStage > activeStage) { // only swap the icon when crossing into a new stage, not on every tick after the threshold
+                activeStage = targetStage; // bumps the active stage variable up to the new stage
+                plant.setIcon(labelSystem.getIcon(userData.getActiveSkin()[activeStage], 200, 200)); // updates the icon using the JLabelSystem cache so the image is loaded from the classpath and properly scaled, instead of new ImageIcon which only reads from disk
             }
 
         });
@@ -108,6 +109,11 @@ public class focusPage extends page {
         addComponent(focusTimer);  // adds the timer JLabel to the page using the addComponent method from the superclass
 
 
+        statsLabel = new JLabel(buildStatsText(), SwingConstants.CENTER); // small stat readout in the right side of the page, refreshed after every stopFocus so the user sees their progress right away
+        statsLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        statsLabel.setBounds(700, 250, 250, 60);
+        statsLabel.setForeground(Color.WHITE);
+        addComponent(statsLabel);
 
 
 
@@ -138,8 +144,25 @@ public class focusPage extends page {
         if(isFocusActive) {
             isFocusActive = false;
             timer.stop();
+            userData.addTimeOffPhone(seconds); // banks the duration of this session into the running total used by the stats readout
+            userData.addCoins(seconds / 60); // rewards one coin per full minute of focus, simple gamification per the proposal
+            if(seconds >= 60) { // only counts as a completed session if the user focused for at least one minute, prevents accidental clicks from inflating the streak
+                userData.incrementSessions();
+            }
+            seconds = 0; // resets the elapsed seconds for the next session so the timer starts fresh next time
+            focusTimer.setText(formatTime(seconds));
+            activeStage = 0; // resets the plant back to the first stage for the next session
+            plant.setIcon(labelSystem.getIcon(userData.getActiveSkin()[activeStage], 200, 200));
+            statsLabel.setText(buildStatsText()); // refreshes the stat readout so the user sees their new totals immediately after stopping
+            myFrame.refreshTopBar(); // refreshes the top bar so the coin total stays in sync with what the user just earned
         }
 
+    }
+
+    private String buildStatsText() { // builds the string for the stats label, HTML is used so the JLabel can render two lines of text inside one component
+        int minutes = userData.getTotalTimeOffPhone() / 60;
+        return "<html><div style='text-align:center;'>Sessions: " + userData.getSessionsCompleted()
+                + "<br>Total focus: " + minutes + " min</div></html>";
     }
 
 
