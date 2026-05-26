@@ -1,0 +1,22 @@
+{
+  "coins": 0,
+  "availableSkins": [],
+  "totalTimeOffPhone": 0,
+  "totalTimeSleeping": 0,
+  "totalTimeOutside": 0,
+  "totalTimeSocial": 0,
+  "sessionsCompleted": 0,
+  "userName": "Jack",
+  "streak": 1,
+  "lastOpenedDate": "2026-05-26",
+  "defaultFocusMinutes": 25,
+  "ownedItems": [],
+  "activeSkin": [
+    "images/UI/tree1.png",
+    "images/UI/tree2.png",
+    "images/UI/tree3.png",
+    "images/UI/tree4.png",
+    "images/UI/tree5.png",
+    "images/UI/tree6.png"
+  ]
+}
