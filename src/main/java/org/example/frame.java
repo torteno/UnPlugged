@@ -25,7 +25,7 @@ public class frame {
     public JPanel backgroundPanel;
     JLabelSystem label = new JLabelSystem(this);
     private static page activePage; // current active page
-    public static final boolean builder = true; // wether certain components should be movable
+    public static final boolean builder = false; // wether certain components should be movable
     private final int EDGE = 8;  // pixels from edge that count as a resize handle
 
     public focusPage focusPg = new focusPage(this); // focus page
@@ -138,67 +138,7 @@ public class frame {
 
 
 
-            // BUILDER MODEMADE ENTIRLY BY AI, JUST TO MAKE OUR LIVES EASIER SO WE CAN DRAG THE COMPONENTS AROUND AND REZISE THEM, I WILL DELETE FOR THE FINAL SUBMISSION
 
-            if (builder) {
-                java.awt.event.MouseAdapter m = new java.awt.event.MouseAdapter() {
-                    Component sel; Point start; Rectangle init; int mode; // 0=move 1=R 2=L 3=B 4=T
-
-                    boolean onActivePage(Component c) {
-                        return activePage != null && activePage.getPageComponents().contains(c);
-                    }
-
-                    public void mousePressed(MouseEvent e) {
-                        Component c = backgroundPanel.getComponentAt(e.getPoint());
-                        System.out.println("clicked hash=" + System.identityHashCode(c)
-                                + "  activePage hash=" + System.identityHashCode(activePage)
-                                + "  list size=" + activePage.getPageComponents().size());
-                        for (Component pc : activePage.getPageComponents()) {
-                            System.out.println("  in list: " + System.identityHashCode(pc)
-                                    + "  matches=" + (pc == c));
-                        }
-                        if (c == null || c == backgroundPanel || !onActivePage(c)) return;
-
-                        if (SwingUtilities.isRightMouseButton(e)) {
-                            for (Component pc : activePage.getPageComponents()) {
-                                Rectangle r = pc.getBounds();
-                                String path = pc.getName() == null ? "PATH" : pc.getName();
-                                System.out.println("labelSystem.assets(" + r.x + "," + r.y + ","
-                                        + r.width + "," + r.height + ",\"" + path + "\",false,1,true,false);");
-                            }
-                            return;
-                        }
-
-                        sel = c; start = e.getPoint(); init = c.getBounds();
-                        int rx = e.getX() - init.x, ry = e.getY() - init.y;
-                        if      (rx > init.width  - EDGE) mode = 1;
-                        else if (rx < EDGE)               mode = 2;
-                        else if (ry > init.height - EDGE) mode = 3;
-                        else if (ry < EDGE)               mode = 4;
-                        else                              mode = 0;
-                    }
-
-                    public void mouseDragged(MouseEvent e) {
-                        if (sel == null) return;
-                        int dx = e.getX() - start.x, dy = e.getY() - start.y;
-                        Rectangle r = new Rectangle(init);
-                        if      (mode == 0) { r.x += dx; r.y += dy; }
-                        else if (mode == 1) { r.width  += dx; }
-                        else if (mode == 2) { r.x += dx; r.width  -= dx; }
-                        else if (mode == 3) { r.height += dy; }
-                        else                { r.y += dy; r.height -= dy; }
-                        sel.setBounds(r);
-
-                        if (sel instanceof JLabel && sel.getName() != null) {
-                            ((JLabel) sel).setIcon(label.gifs(sel.getName(), r.width, r.height));
-                        }
-                    }
-
-                    public void mouseReleased(MouseEvent e) { sel = null; }
-                };
-                backgroundPanel.addMouseListener(m);
-                backgroundPanel.addMouseMotionListener(m);
-            }
 
       //  backgroundPanel.addMouseMotionListener(mouseMotionListener);
     //    backgroundPanel.addMouseListener(mouseListener);
