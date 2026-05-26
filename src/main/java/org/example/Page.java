@@ -9,9 +9,9 @@ public abstract class Page {
 
     private final JLabelSystem labelSystem; 
     private final JButtonSystem buttonSystem; 
-    private final Frame myFrame; 
+    private final frame myFrame;
 
-    public Page(Frame myFrame, String pageName, ArrayList<JLabel> pageLabels) {
+    public Page(frame myFrame, String pageName, ArrayList<JLabel> pageLabels) {
         this.myFrame = myFrame;
         this.pageLabels = pageLabels;
 

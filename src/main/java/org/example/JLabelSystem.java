@@ -22,10 +22,10 @@ public class JLabelSystem extends JLabel {
 
     public Map<String, JLabel> assets = new HashMap<>();
 
-    private final Frame myFrame;
+    private final frame myFrame;
 
 
-    public JLabelSystem(Frame myFrame) {
+    public JLabelSystem(frame myFrame) {
         this.myFrame = myFrame;
     }
 
@@ -63,9 +63,10 @@ public class JLabelSystem extends JLabel {
 
         if(gif) {
             Icon = gifs(filePath, width, height);
-       }
+        }
 
         JLabel label = new JLabel(Icon);
+        label.setName(filePath);
         label.setBounds(x, y, width, height); // Set the bounds of the JLabel to the specified x, y, width, and height
         label.setOpaque(opaque); // If the asset should be opaque, set the JLabel to be opaque
 
@@ -94,6 +95,8 @@ public class JLabelSystem extends JLabel {
             return new ImageIcon();
         }
         return new ImageIcon(location);
+    }
+
     public JLabel assets(int x, int y, int width, int height, String filePath, boolean opaque, int zOrder, boolean visible, boolean gif, boolean button, MouseAdapter mouseListener) {
         ImageIcon Icon = getSprite(filePath, width, height);
 
@@ -141,10 +144,10 @@ public class JLabelSystem extends JLabel {
 
 
         URL url = getClass().getResource("/" + filePath);
-        ImageIcon icon = new ImageIcon(url);
-        Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        //ImageIcon icon = new ImageIcon(url);
+        //Image scaled = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
-        return new ImageIcon(scaled);
+        return new ImageIcon(url);
 
 
 

@@ -14,12 +14,5 @@ public class Main {
         new frame();
 
     }
-   public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-      Frame myFrame = new Frame();
-      myFrame.setVisible(true);
-      ArrayList<JLabel> pageLabels = new ArrayList<>();
-      Page page = new Page(myFrame, "Home", pageLabels){};
-      page.loadNavigation();
-      page.loadButtons();
-   }
 }
+

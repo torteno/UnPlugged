@@ -3,9 +3,9 @@ package org.example;
 import javax.swing.JButton; 
 
 public class JButtonSystem {
-    private final Frame frame; 
+    private final frame frame;
     
-    public JButtonSystem(Frame frame) {
+    public JButtonSystem(frame frame) {
         this.frame = frame; 
     }
 
@@ -14,8 +14,6 @@ public class JButtonSystem {
         button.setBounds(x, y, width, height); 
         frame.backgroundPanel.add(button); 
         frame.backgroundPanel.setComponentZOrder(button, 0);
-        frame.revalidate(); 
-        frame.repaint(); 
         return button; 
     }
 }

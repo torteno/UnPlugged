@@ -1,12 +1,27 @@
 package org.example.pages;
 
-public class sleepPage {
+import org.example.JLabelSystem;
+import org.example.frame;
 
-  //  public sleepPage() {
-     //   super();
-
-
-   // }
+public class sleepPage extends page{
 
 
+
+
+    public sleepPage(frame myFrame) {
+        super(myFrame, "sleepPage");
+    }
+
+    public void sleep() {
+
+
+    }
+
+    @Override
+    public void initializePage() {
+
+
+
+
+    }
 }
